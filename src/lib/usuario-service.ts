@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcryptjs";
 import { UserNotFoundError } from "../utils/errors/user-not-found-error";
+import { generateToken } from "../helpers/authenticator";
 
 const prisma = new PrismaClient();
 
@@ -19,7 +20,7 @@ export async function createUser(
 
   const hashedPassword = await hash(password, 10);
 
-  const newUser = await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       name,
       email,
@@ -27,7 +28,7 @@ export async function createUser(
     },
   });
 
-  return newUser;
+  return { user, tokens: generateToken(user.id) };
 }
 
 export async function getUsers() {

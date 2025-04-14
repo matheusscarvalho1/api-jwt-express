@@ -5,11 +5,18 @@ import { unprotectedRoutes } from "./http/controllers/unprotected/routes";
 import { protectedRoutes } from "./http/controllers/protected/routes";
 import { authRoutes } from "./http/controllers/authenticate/routes";
 
+import cors from "cors";
+
 dotenv.config();
 const app = express();
 
 // garente que todo body seja convertido em .json automaticamente
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
 //Rotas
 userRoutes(app);

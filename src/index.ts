@@ -7,9 +7,11 @@ import { authRoutes } from "./http/controllers/authenticate/routes";
 
 dotenv.config();
 const app = express();
+
 // garente que todo body seja convertido em .json automaticamente
 app.use(express.json());
 
+//Rotas
 userRoutes(app);
 unprotectedRoutes(app);
 protectedRoutes(app);

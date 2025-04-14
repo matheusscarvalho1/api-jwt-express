@@ -1,8 +1,8 @@
-import express from "express";
+import { Request, Response } from "express";
 
 import { deleteUserRepository } from "../../../lib/user-service";
 
-const deleteUser = async (req: express.Request, res: express.Response) => {
+const deleteUser = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   const response = await deleteUserRepository(id);

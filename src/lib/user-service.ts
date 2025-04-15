@@ -6,7 +6,9 @@ import { generateToken } from "../helpers/authenticator";
 const prisma = new PrismaClient();
 
 export async function createUserRepository(
-  name: string,
+  firstName: string,
+  lastName: string,
+  age: number,
   email: string,
   password: string
 ) {
@@ -22,7 +24,9 @@ export async function createUserRepository(
 
   const user = await prisma.user.create({
     data: {
-      name,
+      firstName,
+      lastName,
+      age,
       email,
       password: hashedPassword,
     },
@@ -43,6 +47,18 @@ export async function getUsersRepository() {
   return data;
 }
 
+export async function getProfileRepository(userId: string) {
+  const data = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!data) {
+    throw new UserNotFoundError();
+  }
+
+  return data;
+}
+
 export async function getUserByIdRepository(id: string) {
   const data = await prisma.user.findUnique({
     where: { id },
@@ -57,7 +73,9 @@ export async function getUserByIdRepository(id: string) {
 
 export async function updateUserRepository(
   id: string,
-  name?: string,
+  firstName?: string,
+  lastName?: string,
+  age?: number,
   email?: string,
   password?: string
 ) {
@@ -70,7 +88,9 @@ export async function updateUserRepository(
   const updatedUser = await prisma.user.update({
     where: { id },
     data: {
-      name,
+      firstName,
+      lastName,
+      age,
       email,
       password: password ? await hash(password, 10) : userExists.password,
     },

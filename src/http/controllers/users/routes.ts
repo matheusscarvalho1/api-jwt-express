@@ -1,5 +1,6 @@
 import express, { RequestHandler } from "express";
 import getUsers from "./get-users";
+import getProfile from "./get-profile";
 import createUser from "./create-user";
 import updateUser from "./update-user";
 import deleteUser from "./detele-user";
@@ -11,6 +12,11 @@ export function userRoutes(app: express.Application) {
 
   router.post("/v1/user/create", createUser as RequestHandler);
   router.get("/v1/user/get", authMiddleware, getUsers as RequestHandler);
+  router.get(
+    "/v1/user/get/profile",
+    authMiddleware,
+    getProfile as RequestHandler
+  );
   router.get(
     "/v1/user/get/id/:id",
     authMiddleware,

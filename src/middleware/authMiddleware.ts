@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import IJwtPayload from "./IJwtPayLoad";
 
+// Middleware de autenticação
 const authMiddleware: RequestHandler = (req, res, next) => {
   if (!process.env.JWT_SECRET_KEY) {
     res.status(500).json({ message: "JWT secret key not found." });
@@ -21,7 +22,7 @@ const authMiddleware: RequestHandler = (req, res, next) => {
       process.env.JWT_SECRET_KEY
     ) as IJwtPayload;
 
-    (req as any).userId = tokenPayload.userId;
+    (req as any).user = { sub: tokenPayload.userId }; // Definindo 'sub' como userId
 
     next();
   } catch (error) {

@@ -6,16 +6,25 @@ const updateUser = (req: Request, res: Response) => {
   const id = req.params.id;
 
   const schema = z.object({
-    name: z.string().optional(),
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
+    age: z.number().int().positive().optional(),
     email: z.string().email().optional(),
     password: z.string().min(6).optional(),
   });
 
   try {
     const body = req.body;
-    const { name, email, password } = schema.parse(body);
+    const { firstName, lastName, age, email, password } = schema.parse(body);
 
-    const userResponse = updateUserRepository(id, name, email, password);
+    const userResponse = updateUserRepository(
+      id,
+      firstName,
+      lastName,
+      age,
+      email,
+      password
+    );
 
     if (!userResponse) {
       res.status(400).json({ message: "Erro ao atualizar usuário." });

@@ -4,7 +4,9 @@ import { createUserRepository } from "../../../lib/user-service";
 
 const createUser = async (req: Request, res: Response) => {
   const schema = z.object({
-    name: z.string(),
+    firstName: z.string(),
+    lastName: z.string(),
+    age: z.number().int().positive(),
     email: z.string().email({ message: "E-mail inválido" }),
     password: z
       .string()
@@ -13,9 +15,15 @@ const createUser = async (req: Request, res: Response) => {
 
   try {
     const body = req.body;
-    const { name, email, password } = schema.parse(body);
+    const { firstName, lastName, age, email, password } = schema.parse(body);
 
-    const userResponse = await createUserRepository(name, email, password);
+    const userResponse = await createUserRepository(
+      firstName,
+      lastName,
+      age,
+      email,
+      password
+    );
 
     if (!userResponse) {
       return res.status(400).json({ message: "Erro ao criar usuário." });

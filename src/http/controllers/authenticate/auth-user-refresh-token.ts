@@ -1,7 +1,7 @@
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import { Request, Response } from "express";
 import { generateToken } from "../../../helpers/authenticator";
-import IJwtPayLoad from "../../../middleware/IJwtPayLoad";
+import IJwtPayLoad from "../../../interface/IJwtPayLoad";
 
 const authUserRefreshToken = async (req: Request, res: Response) => {
   try {

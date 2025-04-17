@@ -1,4 +1,4 @@
-import express, { RequestHandler } from "express";
+import { RequestHandler, Application, Router } from "express";
 
 import postUnprotectedData from "./create-data";
 import deleteUnprotectedData from "./delete-data";
@@ -6,8 +6,8 @@ import getUnprotectedDataById from "./get-data-by-id";
 import getUnprotectedData from "./get-datas";
 import updateUnprotectedData from "./update-data";
 
-export function unprotectedRoutes(app: express.Application) {
-  const router = express.Router();
+export function unprotectedRoutes(app: Application) {
+  const router = Router();
 
   router.post("/v1/unprotected/create", postUnprotectedData as RequestHandler);
   router.get("/v1/unprotected/get", getUnprotectedData as RequestHandler);

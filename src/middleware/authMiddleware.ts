@@ -1,9 +1,13 @@
-import { RequestHandler } from "express";
+import { Response, NextFunction } from "express";
+import { RequestJWT } from "../@types/customRequest-jwt";
 import jwt from "jsonwebtoken";
-import IJwtPayload from "./IJwtPayLoad";
+import IJwtPayload from "../interface/IJwtPayLoad";
 
-// Middleware de autenticação
-const authMiddleware: RequestHandler = (req, res, next) => {
+const authMiddleware = (
+  req: RequestJWT,
+  res: Response,
+  next: NextFunction
+): void => {
   if (!process.env.JWT_SECRET_KEY) {
     res.status(500).json({ message: "JWT secret key not found." });
     return;
@@ -22,7 +26,7 @@ const authMiddleware: RequestHandler = (req, res, next) => {
       process.env.JWT_SECRET_KEY
     ) as IJwtPayload;
 
-    (req as any).user = { sub: tokenPayload.userId }; // Definindo 'sub' como userId
+    req.user = { sub: tokenPayload.userId };
 
     next();
   } catch (error) {

@@ -1,10 +1,10 @@
-import express, { RequestHandler } from "express";
+import { Application, RequestHandler, Router } from "express";
 
 import authUser from "./auth-user";
 import authUserRefreshToken from "./auth-user-refresh-token";
 
-export function authRoutes(app: express.Application) {
-  const router = express.Router();
+export function authRoutes(app: Application) {
+  const router = Router();
 
   router.post("/v1/authenticate/user", authUser as RequestHandler);
 

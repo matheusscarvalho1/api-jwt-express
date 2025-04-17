@@ -1,10 +1,7 @@
-import express from "express";
+import { Request, Response } from "express";
 import { getProtectedDataRepository } from "../../../lib/protected-service";
 
-const getProtectedData = async (
-  req: express.Request,
-  res: express.Response
-) => {
+const getProtectedData = async (req: Request, res: Response) => {
   try {
     const data = await getProtectedDataRepository();
     if (!data) {

@@ -1,4 +1,4 @@
-import express, { RequestHandler } from "express";
+import { Router, Application, RequestHandler } from "express";
 
 import authMiddleware from "../../../middleware/authMiddleware";
 
@@ -8,8 +8,8 @@ import getProtectedDataById from "./get-data-by-id";
 import getProtectedData from "./get-datas";
 import updateProtectedData from "./update-data";
 
-export function protectedRoutes(app: express.Application) {
-  const router = express.Router();
+export function protectedRoutes(app: Application) {
+  const router = Router();
 
   router.post(
     "/v1/protected/create",

@@ -1,7 +1,7 @@
-import express from "express";
+import { Request, Response } from "express";
 import { getUsersRepository } from "../../../lib/user-service";
 
-const getUsers = async (req: express.Request, res: express.Response) => {
+const getUsers = async (req: Request, res: Response) => {
   try {
     const data = await getUsersRepository();
     if (!data) {

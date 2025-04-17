@@ -1,10 +1,7 @@
-import express from "express";
+import { Response, Request } from "express";
 import { getUnprotectedDataByIdRepository } from "../../../lib/unprotected-service";
 
-const getUnprotectedDataById = async (
-  req: express.Request,
-  res: express.Response
-) => {
+const getUnprotectedDataById = async (req: Request, res: Response) => {
   const id = req.params.id;
   try {
     const data = await getUnprotectedDataByIdRepository(id);

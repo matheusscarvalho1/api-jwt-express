@@ -1,13 +1,8 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { getUserByIdRepository } from "../../../lib/user-service";
+import { RequestJWT } from "../../../@types/customRequest-jwt";
 
-interface AuthenticatedRequest extends Request {
-  user?: {
-    sub: string; // 'sub' que é igual ao userId
-  };
-}
-
-const getProfile = async (req: AuthenticatedRequest, res: Response) => {
+const getProfile = async (req: RequestJWT, res: Response) => {
   try {
     const userId = req.user?.sub;
     if (!userId) {

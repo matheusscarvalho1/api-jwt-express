@@ -22,5 +22,5 @@ export const authenticateUserRepository = async (
 
   const tokens = generateToken(user.id);
 
-  return { user, tokens };
+  return { tokens };
 };

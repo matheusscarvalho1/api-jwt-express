@@ -11,13 +11,13 @@ export const authenticateUserRepository = async (
   const user = await prisma.user.findUnique({ where: { email } });
 
   if (!user) {
-    return "Usuário ou senha incorretos.";
+    return null;
   }
 
   const passwordMatch = await compare(password, user.password);
 
   if (!passwordMatch) {
-    return "Usuário ou senha incorretos.";
+    return null;
   }
 
   const tokens = generateToken(user.id);

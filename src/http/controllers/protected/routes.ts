@@ -27,7 +27,7 @@ export function protectedRoutes(app: Application) {
     getProtectedDataById
   );
   router.put(
-    "v1/protected/update/id/:id",
+    "/v1/protected/update/id/:id",
     authMiddleware,
     updateProtectedData
   );

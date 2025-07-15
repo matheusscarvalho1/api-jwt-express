@@ -6,6 +6,7 @@ import { protectedRoutes } from "./http/controllers/protected/routes";
 import { authRoutes } from "./http/controllers/authenticate/routes";
 
 import cors from "cors";
+import { healthRoutes } from "./http/controllers/health/routes";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ userRoutes(app);
 unprotectedRoutes(app);
 protectedRoutes(app);
 authRoutes(app);
+healthRoutes(app)
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);

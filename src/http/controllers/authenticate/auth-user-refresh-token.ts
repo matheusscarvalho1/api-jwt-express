@@ -22,7 +22,8 @@ const authUserRefreshToken = async (req: Request, res: Response) => {
     console.error(error);
 
     if (error instanceof JsonWebTokenError) {
-      return res.status(401).json({ message: "Unauthorized" });
+      res.status(401).json({ message: "Unauthorized" });
+      return;
     }
 
     res.status(500).json({ message: "Internal Server Error" });

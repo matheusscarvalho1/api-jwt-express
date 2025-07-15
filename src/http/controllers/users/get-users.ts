@@ -5,7 +5,7 @@ const getUsers = async (req: Request, res: Response) => {
   try {
     const data = await getUsersRepository();
     if (!data) {
-      return res.status(404).json({ message: "Nenhum usuário encontrado" });
+       res.status(404).json({ message: "Nenhum usuário encontrado" });
     }
     res
       .status(200)

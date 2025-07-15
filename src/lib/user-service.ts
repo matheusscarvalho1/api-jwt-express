@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { hash } from "bcryptjs";
 import { UserNotFoundError } from "../utils/errors/user-not-found-error";
 import { generateToken } from "../helpers/authenticator";
+import { EmailAlreadyExistsError } from "../utils/errors/email-already-exists-error";
 
 const prisma = new PrismaClient();
 
@@ -17,7 +18,7 @@ export async function createUserRepository(
   });
 
   if (userExists) {
-    throw new Error("Email já cadastrado.");
+    throw new EmailAlreadyExistsError();
   }
 
   const hashedPassword = await hash(password, 10);

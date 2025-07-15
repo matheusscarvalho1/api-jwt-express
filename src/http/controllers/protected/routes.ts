@@ -1,4 +1,4 @@
-import { Router, Application, RequestHandler } from "express";
+import { Router, Application } from "express";
 
 import authMiddleware from "../../../middleware/authMiddleware";
 
@@ -14,27 +14,27 @@ export function protectedRoutes(app: Application) {
   router.post(
     "/v1/protected/create",
     authMiddleware,
-    postProtectedData as RequestHandler
+    postProtectedData
   );
   router.get(
     "/v1/protected/get",
     authMiddleware,
-    getProtectedData as RequestHandler
+    getProtectedData
   );
   router.get(
     "/v1/protected/get/id/:id",
     authMiddleware,
-    getProtectedDataById as RequestHandler
+    getProtectedDataById
   );
   router.put(
     "v1/protected/update/id/:id",
     authMiddleware,
-    updateProtectedData as RequestHandler
+    updateProtectedData
   );
   router.delete(
     "/v1/protected/delete/id/:id",
     authMiddleware,
-    deleteProtectedData as RequestHandler
+    deleteProtectedData
   );
 
   app.use("/api", router);

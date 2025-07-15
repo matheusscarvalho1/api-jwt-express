@@ -30,9 +30,10 @@ const updateUser = (req: Request, res: Response) => {
       res.status(400).json({ message: "Erro ao atualizar usuário." });
     }
 
-    return res.status(200).json({
+     res.status(200).json({
       message: "Usuário atualizado com sucesso",
     });
+
   } catch (error) {
     console.error("Erro ao atualizar usuário:", error);
     res.status(500).json({ message: "Erro ao atualizar usuário" });

@@ -1,4 +1,4 @@
-import { RequestHandler, Application, Router } from "express";
+import { Application, Router } from "express";
 import getUsers from "./get-users";
 import getProfile from "./get-profile";
 import createUser from "./create-user";
@@ -10,27 +10,27 @@ import authMiddleware from "../../../middleware/authMiddleware";
 export function userRoutes(app: Application) {
   const router = Router();
 
-  router.post("/v1/user/create", createUser as RequestHandler);
-  router.get("/v1/user/get", authMiddleware, getUsers as RequestHandler);
+  router.post("/v1/user/create", createUser);
+  router.get("/v1/user/get", authMiddleware, getUsers);
   router.get(
     "/v1/user/get/profile",
     authMiddleware,
-    getProfile as RequestHandler
+    getProfile
   );
   router.get(
     "/v1/user/get/id/:id",
     authMiddleware,
-    getUserById as RequestHandler
+    getUserById
   );
   router.put(
     "/v1/user/update/id/:id",
     authMiddleware,
-    updateUser as RequestHandler
+    updateUser
   );
   router.delete(
     "/v1/user/delete/id/:id",
     authMiddleware,
-    deleteUser as RequestHandler
+    deleteUser
   );
 
   app.use("/api", router);

@@ -1,41 +1,38 @@
-import { Request, Response } from "express";
+import { RequestHandler } from "express";
 import { z } from "zod";
 import { createUserRepository } from "../../../lib/user-service";
+import { EmailAlreadyExistsError } from "../../../utils/errors/email-already-exists-error";
 
-const createUser = async (req: Request, res: Response) => {
+const createUser: RequestHandler = async (req, res) => {
   const schema = z.object({
     firstName: z.string(),
     lastName: z.string(),
     age: z.number().int().positive(),
     email: z.string().email({ message: "E-mail inválido" }),
-    password: z
-      .string()
-      .min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
+    password: z.string().min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
   });
 
   try {
-    const body = req.body;
-    const { firstName, lastName, age, email, password } = schema.parse(body);
+    const { firstName, lastName, age, email, password } = schema.parse(req.body);
 
-    const userResponse = await createUserRepository(
-      firstName,
-      lastName,
-      age,
-      email,
-      password
-    );
+    const user = await createUserRepository(firstName, lastName, age, email, password);
 
-    if (!userResponse) {
-      return res.status(400).json({ message: "Erro ao criar usuário." });
-    }
-
-    return res.status(201).json({
+    res.status(201).json({
       message: "Usuário criado com sucesso",
-      user: userResponse,
+      user,
     });
   } catch (error) {
     console.error("Erro ao criar usuário:", error);
-    res.status(500).json({ message: "Erro ao criar usuário" });
+
+    if (error instanceof z.ZodError) {
+      res.status(400).json({ message: "Dados inválidos", issues: error.errors });
+    }
+
+    if (error instanceof EmailAlreadyExistsError) {
+      res.status(409).json({ message: error.message });
+    }
+
+    res.status(500).json({ message: "Erro interno ao criar usuário" });
   }
 };
 

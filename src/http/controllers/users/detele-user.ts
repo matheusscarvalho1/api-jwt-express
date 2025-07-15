@@ -8,7 +8,7 @@ const deleteUser = async (req: Request, res: Response) => {
   const response = await deleteUserRepository(id);
 
   if (!response) {
-    return res.status(400).json({ message: "Usuário não encontrado" });
+     res.status(404).json({ message: "Usuário não encontrado" });
   }
   res.status(200).json({ message: "Usuário deletado" });
 };

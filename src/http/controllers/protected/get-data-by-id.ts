@@ -6,7 +6,7 @@ const getProtectedDataById = async (req: Request, res: Response) => {
   try {
     const data = await getProtectedDataByIdRepository(id);
     if (!data) {
-      return res.status(404).json({ message: "Nenhum usuário encontrado" });
+       res.status(404).json({ message: "Nenhum usuário encontrado" });
     }
     res
       .status(200)

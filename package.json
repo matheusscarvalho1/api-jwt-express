@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "deploy": "npm install && npx prisma db push && npm run build",
-    "prepare": "npm install && npm run build"
+    "update": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",

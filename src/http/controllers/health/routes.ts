@@ -5,7 +5,7 @@ import HealthStatus from './health'
 export function healthRoutes(app: Application) {
   const router = Router();
 
-  router.get("/health", HealthStatus)
+  router.get("/v1/health", HealthStatus)
 
   app.use("/api", router);
 }

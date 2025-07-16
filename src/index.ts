@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://form-login-consuming-api-jwt-express.onrender.com",
+    origin: "*",
   })
 );
 

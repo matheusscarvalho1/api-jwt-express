@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { deleteUnprotectedDataRepository } from "../../../lib/unprotected-service";
+import { deleteUnprotectedDataRepository } from "../../repositories/unprotected-repository";
 
 const deleteUnprotectedData = async (req: Request, res: Response) => {
   const id = req.params.id;

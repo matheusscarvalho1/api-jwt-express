@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { updateUnprotectedDataRepository } from "../../../lib/unprotected-service";
+import { updateUnprotectedDataRepository } from "../../repositories/unprotected-repository";
 
 const updateUnprotectedData = (req: Request, res: Response) => {
   const id = req.params.id;

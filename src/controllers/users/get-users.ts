@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { getUserByIdRepository } from "../../../lib/user-service";
+import { getUsersRepository } from "../../repositories/user-repository";
 
-const getUsersById = async (req: Request, res: Response) => {
-  const id = req.params.id;
+const getUsers = async (req: Request, res: Response) => {
   try {
-    const data = await getUserByIdRepository(id);
+    const data = await getUsersRepository();
     if (!data) {
        res.status(404).json({ message: "Nenhum usuário encontrado" });
     }
@@ -17,4 +16,4 @@ const getUsersById = async (req: Request, res: Response) => {
   }
 };
 
-export default getUsersById;
+export default getUsers;

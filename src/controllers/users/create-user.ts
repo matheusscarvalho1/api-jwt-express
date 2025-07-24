@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
-import { createUserRepository } from "../../../lib/user-service";
-import { EmailAlreadyExistsError } from "../../../utils/errors/email-already-exists-error";
+import { createUserRepository } from "../../repositories/user-repository";
+import { EmailAlreadyExistsError } from "../../utils/errors/email-already-exists-error";
 
 const createUser: RequestHandler = async (req, res) => {
   const schema = z.object({

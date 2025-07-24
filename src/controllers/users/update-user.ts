@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { updateUserRepository } from "../../../lib/user-service";
+import { updateUserRepository } from "../../repositories/user-repository";
 
 const updateUser = (req: Request, res: Response) => {
   const id = req.params.id;

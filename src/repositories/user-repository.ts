@@ -66,7 +66,7 @@ export async function getUserByIdRepository(id: string) {
   });
 
   if (!data) {
-    throw new Error("Usuário não encontrado.");
+    throw new UserNotFoundError();
   }
 
   return data;

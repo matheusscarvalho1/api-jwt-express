@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { Request, Response } from "express";
-import { createUnprotectedDataRepository } from "../../../lib/unprotected-service";
+import { createProtectedDataRepository } from "../../repositories/protected-repository";
 
-const postUnprotectedData = async (req: Request, res: Response) => {
+const postProtectData = async (req: Request, res: Response) => {
   const schema = z.object({
     data: z.string(),
   });
@@ -10,7 +10,7 @@ const postUnprotectedData = async (req: Request, res: Response) => {
   const body = req.body;
   const { data } = schema.parse(body);
 
-  const response = createUnprotectedDataRepository(data);
+  const response = createProtectedDataRepository(data);
 
   if (!response) {
     res.status(400).json({ message: "Erro ao criar dado." });
@@ -19,4 +19,4 @@ const postUnprotectedData = async (req: Request, res: Response) => {
   res.status(201).json({ message: "Dado criado com sucesso", data: response });
 };
 
-export default postUnprotectedData;
+export default postProtectData;

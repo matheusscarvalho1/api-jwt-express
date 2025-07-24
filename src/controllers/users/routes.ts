@@ -5,7 +5,7 @@ import createUser from "./create-user";
 import updateUser from "./update-user";
 import deleteUser from "./detele-user";
 import getUserById from "./get-user-by-id";
-import authMiddleware from "../../../middleware/authMiddleware";
+import authMiddleware from "../../middleware/authMiddleware";
 
 export function userRoutes(app: Application) {
   const router = Router();

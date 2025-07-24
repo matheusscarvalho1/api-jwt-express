@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { getUserByIdRepository } from "../../../lib/user-service";
-import { RequestJWT } from "../../../@types/customRequest-jwt";
+import { getUserByIdRepository } from "../../repositories/user-repository";
+import { RequestJWT } from "../../@types/customRequest-jwt";
 
 const getProfile = async (req: RequestJWT, res: Response) => {
   try {

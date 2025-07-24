@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
-import { getUnprotectedDataRepository } from "../../../lib/unprotected-service";
+import { Response, Request } from "express";
+import { getUnprotectedDataByIdRepository } from "../../repositories/unprotected-repository";
 
-const getUnprotectedData = async (req: Request, res: Response) => {
+const getUnprotectedDataById = async (req: Request, res: Response) => {
+  const id = req.params.id;
   try {
-    const data = await getUnprotectedDataRepository();
+    const data = await getUnprotectedDataByIdRepository(id);
     if (!data) {
       return res.status(404).json({ message: "Nenhum usuário encontrado" });
     }
@@ -16,4 +17,4 @@ const getUnprotectedData = async (req: Request, res: Response) => {
   }
 };
 
-export default getUnprotectedData;
+export default getUnprotectedDataById;

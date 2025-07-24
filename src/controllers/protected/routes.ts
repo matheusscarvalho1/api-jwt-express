@@ -1,6 +1,6 @@
 import { Router, Application } from "express";
 
-import authMiddleware from "../../../middleware/authMiddleware";
+import authMiddleware from "../../middleware/authMiddleware";
 
 import postProtectedData from "./create-data";
 import deleteProtectedData from "./delete-data";

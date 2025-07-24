@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { updateProtectedDataRepository } from "../../../lib/protected-service";
+import { updateProtectedDataRepository } from "../../repositories/protected-repository";
 
 const updateProtectedData = (req: Request, res: Response) => {
   const id = req.params.id;

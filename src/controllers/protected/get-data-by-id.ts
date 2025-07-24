@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { getUsersRepository } from "../../../lib/user-service";
+import { getProtectedDataByIdRepository } from "../../repositories/protected-repository";
 
-const getUsers = async (req: Request, res: Response) => {
+const getProtectedDataById = async (req: Request, res: Response) => {
+  const id = req.params.id;
   try {
-    const data = await getUsersRepository();
+    const data = await getProtectedDataByIdRepository(id);
     if (!data) {
        res.status(404).json({ message: "Nenhum usuário encontrado" });
     }
@@ -16,4 +17,4 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-export default getUsers;
+export default getProtectedDataById;

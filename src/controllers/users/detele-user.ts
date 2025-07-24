@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { deleteUserRepository } from "../../../lib/user-service";
+import { deleteUserRepository } from "../../repositories/user-repository";
 
 const deleteUser = async (req: Request, res: Response) => {
   const id = req.params.id;

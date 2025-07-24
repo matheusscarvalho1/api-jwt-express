@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Request, Response } from "express";
-import { authenticateUserRepository } from "../../../lib/auth-service";
+import { authenticateUserRepository } from "../../repositories/auth-repository";
 
 const authUser = async (req: Request, res: Response) => {
   try {

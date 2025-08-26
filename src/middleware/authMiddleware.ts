@@ -14,7 +14,8 @@ const authMiddleware = (
   }
 
   try {
-    const accessToken = req.headers.authorization?.split("Bearer ")[1];
+    
+    const accessToken = req.cookies?.accessToken || req.headers.authorization?.split("Bearer ")[1];
 
     if (!accessToken) {
       res.status(401).json({ message: "Unauthorized" });

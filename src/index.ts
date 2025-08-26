@@ -1,4 +1,5 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { userRoutes } from "./http/controllers/users/routes";
 import { unprotectedRoutes } from "./http/controllers/unprotected/routes";
@@ -10,12 +11,14 @@ import { healthRoutes } from "./http/controllers/health/routes";
 
 dotenv.config();
 const app = express();
+app.use(cookieParser());
 
 // garente que todo body seja convertido em .json automaticamente
 app.use(express.json());
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 

@@ -20,6 +20,14 @@ const authUser = async (req: Request, res: Response) => {
        res.status(401).json({ message: "Usuário ou senha incorretos." });
        return;
     }
+    
+     res.cookie("accessToken", response.tokens.accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 15,
+    });
+
 
      res.status(200).json({
       message: "Usuário autenticado com sucesso",

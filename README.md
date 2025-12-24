@@ -98,3 +98,10 @@ npm run build      # Compila o projeto TypeScript
 npm start          # Executa o projeto em produção
 ```
 
+
+## 👨‍💻 Desenvolvido por
+
+**Matheus Carvalho**
+
+- LinkedIn: [@matheusscarvalho](https://www.linkedin.com/in/matheusscarvalho/)
+- GitHub: [@matheusscarvalho1](https://github.com/matheusscarvalho1)

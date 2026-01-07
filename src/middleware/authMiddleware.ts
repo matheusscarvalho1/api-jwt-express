@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import { RequestJWT } from "../@types/customRequest-jwt";
 import jwt from "jsonwebtoken";
-import IJwtPayload from "../entities/interface/IJwtPayLoad";
+import IJwtPayload from "../interfaces/IJwtPayload";
 
 const authMiddleware = (
   req: RequestJWT,

@@ -1,9 +1,9 @@
 import { Response, Request } from 'express'
 
-const HealthStatus = (req: Request, res: Response) => {
+const HealthStatus = ( req: Request, res: Response) => {
 
-    res.send({
-        status: "ok",
+    return res.send({
+        status: "pong",
         time: new Date().toISOString()
 })
 }

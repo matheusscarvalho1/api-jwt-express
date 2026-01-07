@@ -1,13 +1,13 @@
 {
   "name": "projeto-apis-projetidas-com-jwt",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "deploy": "npm install && npx prisma db push && npm run build",
-    "update": "npm install && npm run build"
+    "dev": "ts-node src/server.ts",
+    "build": "tsup",
+    "start": "node dist/server.mjs",
+    "deploy": "pnpm install && pnpm prisma db push && pnpm build",
+    "update": "pnpm install && pnpm build"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.5.0",
+    "tsup": "^8.5.1",
     "zod": "^3.24.2"
   },
   "devDependencies": {

@@ -16,7 +16,7 @@ const updateUnprotectedData = (req: Request, res: Response) => {
     const response = updateUnprotectedDataRepository(id, data);
 
     if (!response) {
-      res.status(400).json({ message: "Erro ao atualizar usuário." });
+     return res.status(400).json({ message: "Erro ao atualizar usuário." });
     }
 
     return res.status(200).json({
@@ -24,7 +24,7 @@ const updateUnprotectedData = (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Erro ao atualizar usuário:", error);
-    res.status(500).json({ message: "Erro ao atualizar usuário" });
+    return res.status(500).json({ message: "Erro ao atualizar usuário" });
   }
 };
 

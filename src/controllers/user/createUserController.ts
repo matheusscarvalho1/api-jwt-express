@@ -24,18 +24,18 @@ const createUser: RequestHandler = async (req, res) => {
     console.error("Erro ao criar usuário:", error);
 
     if (error instanceof z.ZodError) {
-      res.status(400).json({ message: "Dados inválidos", issues: error.errors });
+     return res.status(400).json({ message: "Dados inválidos", issues: error.errors });
     }
 
     if (error instanceof EmailAlreadyExistsError) {
-      res.status(409).json({ message: error.message });
+      return res.status(409).json({ message: error.message });
     }
 
      if (error instanceof z.ZodError) {
       return res.status(400).json({ message: "Dados inválidos", errors: error.errors });
     }
 
-    res.status(500).json({ message: "Erro interno ao criar usuário" });
+    return res.status(500).json({ message: "Erro interno ao criar usuário" });
   }
 };
 

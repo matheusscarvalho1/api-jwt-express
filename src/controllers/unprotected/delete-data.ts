@@ -7,10 +7,10 @@ const deleteUnprotectedData = async (req: Request, res: Response) => {
   const response = await deleteUnprotectedDataRepository(id);
 
   if (!response) {
-    res.status(400).json({ message: "Erro ao deletar dado." });
+    return res.status(400).json({ message: "Erro ao deletar dado." });
   }
 
-  res.status(200).json({ message: "Dado deletado com sucesso" });
+  return res.status(200).json({ message: "Dado deletado com sucesso" });
 };
 
 export default deleteUnprotectedData;

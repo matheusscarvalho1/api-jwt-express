@@ -13,10 +13,10 @@ const postProtectData = async (req: Request, res: Response) => {
   const response = createProtectedDataRepository(data);
 
   if (!response) {
-    res.status(400).json({ message: "Erro ao criar dado." });
+    return res.status(400).json({ message: "Erro ao criar dado." });
   }
 
-  res.status(201).json({ message: "Dado criado com sucesso", data: response });
+  return res.status(201).json({ message: "Dado criado com sucesso", data: response });
 };
 
 export default postProtectData;

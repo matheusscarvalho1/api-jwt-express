@@ -22,7 +22,7 @@ const updateUser = async (req: Request, res: Response) => {
         body,
       });
 
-     res.status(200).json({
+     return res.status(200).json({
       message: "Usuário atualizado com sucesso",
       updatedUser
     });
@@ -35,8 +35,8 @@ const updateUser = async (req: Request, res: Response) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ message: "Dados inválidos", errors: error.errors });
     }
-    
-    res.status(500).json({ message: "Erro ao atualizar usuário" });
+
+    return res.status(500).json({ message: "Erro ao atualizar usuário" });
   }
 };
 

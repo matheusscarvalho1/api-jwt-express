@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import { authRoutes } from "./routes/authRoutes";
 import { healthRoutes } from "./routes/healthRoutes";
+import { userRoutes } from "./routes/userRoutes";
+import { loggerMiddleware } from "./middleware/loggerMiddleware";
 
 const app = express();
 
@@ -12,15 +14,15 @@ app.use(
   })
 );
 
+
+app.use(loggerMiddleware);
+
 app.use(healthRoutes)
 app.use(authRoutes)
-//app.use("/user")
+app.use(userRoutes)
 // app.use("/unprotected")
 // app.use("/protected")
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
+
 
 export default app

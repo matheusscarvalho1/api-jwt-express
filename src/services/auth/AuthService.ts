@@ -14,7 +14,7 @@ export const authenticateUserService = async ({
   const passwordMatch = await compare(password, user.password);
   if (!passwordMatch) return null;
 
-  const token = generateToken(user.id);
+  const { accessToken, refreshToken } = generateToken(user.id);
 
-  return { token };
+  return { accessToken, refreshToken };
 };

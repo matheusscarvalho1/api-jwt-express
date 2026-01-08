@@ -11,7 +11,7 @@ const authUser = async (req: Request, res: Response) => {
         .min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
     })
 
-    const { email, password } = schema.parse(req.body)
+    const { email, password } = schema.parse(req.body);
 
     const response = await authenticateUserService({ email, password });
 
@@ -21,7 +21,7 @@ const authUser = async (req: Request, res: Response) => {
 
      return res.status(200).json({
       message: "Usuário autenticado com sucesso",
-      data: response,
+      response,
     });
     
   } catch (error) {

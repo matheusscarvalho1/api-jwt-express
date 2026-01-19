@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken";
 import { generateToken } from "../../helpers/authenticator";
 import IJwtPayLoad from "../../interfaces/IJwtPayload";
+import { SecretError } from "../../utils/errors/secret-error";
+import { InvalidTokenError } from "../../utils/errors/invalid-token-error";
 
 export const refreshTokenService = (refreshToken: string) => {
   if (!process.env.JWT_REFRESH_SECRET) {
-    throw new Error("JWT refresh secret not found.");
+    throw new SecretError();
   }
 
   try {
@@ -14,11 +16,15 @@ export const refreshTokenService = (refreshToken: string) => {
     ) as IJwtPayLoad;
 
     return generateToken(tokenPayload.userId);
+    
   } catch (error) {
-    if (error instanceof jwt.JsonWebTokenError) {
-      throw error;
+    if (
+      error instanceof jwt.JsonWebTokenError || 
+      error instanceof jwt.TokenExpiredError
+    ) {
+      throw new InvalidTokenError();
     }
 
-    throw new Error("Invalid refresh token");
+    throw error;
   }
 };

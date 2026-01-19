@@ -7,7 +7,7 @@ const updateProtectedData = (req: Request, res: Response) => {
 
   const schema = z.object({
     data: z.string(),
-  });
+  }).strict();
 
   try {
     const body = req.body;

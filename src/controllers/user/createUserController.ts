@@ -1,9 +1,9 @@
-import { RequestHandler } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { z } from "zod";
 import { EmailAlreadyExistsError } from "../../utils/errors/email-already-exists-error";
 import { createUserService } from "../../services/user/UserService";
 
-const createUser: RequestHandler = async (req, res) => {
+const createUser: RequestHandler = async (req: Request, res: Response) => {
   const schema = z.object({
     firstName: z.string(),
     lastName: z.string(),
@@ -13,16 +13,16 @@ const createUser: RequestHandler = async (req, res) => {
   }).strict();
 
   try {
-    const { firstName, lastName, age, email, password } = schema.parse(req.body);
+    const validatedData = schema.parse(req.body);
 
-    await createUserService({ firstName, lastName, age, email, password });
+    const result = await createUserService(validatedData);
 
     return res.status(201).json({
       message: "Usuário criado com sucesso",
+      data: result,
     });
   } catch (error) {
-    console.error("Erro ao criar usuário:", error);
-
+    
     if (error instanceof z.ZodError) {
      return res.status(400).json({ message: "Dados inválidos", issues: error.errors });
     }
@@ -30,11 +30,8 @@ const createUser: RequestHandler = async (req, res) => {
     if (error instanceof EmailAlreadyExistsError) {
       return res.status(409).json({ message: error.message });
     }
-
-     if (error instanceof z.ZodError) {
-      return res.status(400).json({ message: "Dados inválidos", errors: error.errors });
-    }
-
+    
+    console.error("Erro ao criar usuário:", error);
     return res.status(500).json({ message: "Erro interno ao criar usuário" });
   }
 };

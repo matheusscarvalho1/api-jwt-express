@@ -17,6 +17,7 @@ const updateUser = async (req: Request, res: Response) => {
   try {
   
     const body = schema.parse(req.body);
+
     const updatedUser = await updateUserService({
         id: req.params.id,
         body,
@@ -29,7 +30,7 @@ const updateUser = async (req: Request, res: Response) => {
 
   } catch (error) {
     if(error instanceof UserNotFoundError){
-      throw new Error("Usuário não existe");
+      return res.status(404).json({ message: "Usuário não existe" });
     }
 
     if (error instanceof z.ZodError) {

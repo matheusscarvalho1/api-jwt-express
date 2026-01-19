@@ -5,7 +5,7 @@ import { createProtectedDataRepository } from "../../repositories/protected-repo
 const postProtectData = async (req: Request, res: Response) => {
   const schema = z.object({
     data: z.string(),
-  });
+  }).strict();
 
   const body = req.body;
   const { data } = schema.parse(body);

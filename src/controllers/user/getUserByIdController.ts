@@ -1,21 +1,25 @@
-import { Request, Response } from "express";
-import { getUserByIdRepository } from "../../repositories/UserRepository";
+
 import { UserNotFoundError } from "../../utils/errors/user-not-found-error";
+import { getUserByIdService } from "../../services/user/UserService";
+import { RequestHandler } from "express";
 
-const getUsersById = async (req: Request, res: Response) => {
-  const id = req.params.id;
+const getUserById: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const user = await getUserByIdRepository(id);
+    const user = await getUserByIdService(id);
 
-    return res.status(200).json({ message: "Usuário encontrado com sucesso", user });
+    return res.status(200).json({ message: "Usuário encontrado com sucesso", data: user });
     
   } catch (error) {
     if (error instanceof UserNotFoundError) {
       return res.status(404).json({ message: error.message });
     }
-    console.error("Erro ao listar usuários:", error);
-    return res.status(500).json({ message: "Erro ao listar usuários" });
+    console.error("Erro ao buscar usuários:", error);
+    return res.status(500).json({ 
+      message: "Erro interno ao buscar usuários" 
+    });
   }
 };
 
-export default getUsersById;
+export default getUserById;

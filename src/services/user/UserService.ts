@@ -1,6 +1,9 @@
+import { hash } from "bcryptjs";
 import { CreateUserDTO } from "../../interfaces/ICreateUserDTO";
 import { UpdateUserDTO } from "../../interfaces/IUpdateUser";
-import { createNewUserRepository, deleteUserRepository, updateUserRepository } from "../../repositories/UserRepository";
+import { createNewUserRepository, deleteUserRepository, updateUserRepository, findUserByEmailRepository, getUsersRepository, getUserByIdRepository } from "../../repositories/UserRepository";
+
+import { generateToken } from "../../helpers/authenticator";
 import { EmailAlreadyExistsError } from "../../utils/errors/email-already-exists-error";
 import { UserNotFoundError } from "../../utils/errors/user-not-found-error";
 
@@ -12,36 +15,61 @@ export const createUserService = async ({
     password 
 }: CreateUserDTO ) => {
 
-    try {
-        const newUser = await createNewUserRepository({ firstName, lastName, age, email, password }) 
-        return newUser;
+  const userExists = await findUserByEmailRepository(email);
 
-    } catch (error) {
-        if (error instanceof EmailAlreadyExistsError) {
-            throw error
-        }
-        throw new Error("Erro ao criar usuário");
-    }
-    
+  if (userExists) {
+    throw new EmailAlreadyExistsError();
+  }
+
+  const hashedPassword = await hash(password, 10);
+
+  const newUser = await createNewUserRepository({
+    firstName,
+    lastName,
+    age,
+    email,
+    password: hashedPassword,
+  });
+
+  const { accessToken, refreshToken } = generateToken(newUser.id);
+
+  return { user: newUser, accessToken, refreshToken };
+};
+
+export const getUserService = async () => {
+  return await getUsersRepository();
 }
 
-export const deleteUserService = async (id: string) => {
-  const user = await deleteUserRepository(id);
+export const getUserByIdService = async (id: string) => {
+  const user = await getUserByIdRepository(id);
 
   if (!user) {
     throw new UserNotFoundError();
   }
 
-  return user; 
+  return user;
+}
+
+export const deleteUserService = async (id: string) => {
+
+   const userExists = await getUserByIdRepository(id);
+
+  if (!userExists) {
+    throw new UserNotFoundError();
+  }
+
+  return await deleteUserRepository(id); 
 };
 
 export const updateUserService = async ({ id, body }: UpdateUserDTO) => {
 
-  const updatedUser = await updateUserRepository({ id, body });
+  const userExists = await getUserByIdRepository(id);
 
-  if (!updatedUser) {
+  if (!userExists) {
     throw new UserNotFoundError();
   }
+    
+  const updatedUser = await updateUserRepository({ id, body });
 
   return updatedUser;
 };

@@ -1,42 +1,33 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcryptjs";
 import { UserNotFoundError } from "../utils/errors/user-not-found-error";
-import { generateToken } from "../helpers/authenticator";
-import { EmailAlreadyExistsError } from "../utils/errors/email-already-exists-error";
 import { CreateUserDTO } from "../interfaces/ICreateUserDTO";
-import { UpdateUserDTO } from "../interfaces/IUpdateUser";
+import { UpdateUserBody, UpdateUserDTO } from "../interfaces/IUpdateUser";
 
 const prisma = new PrismaClient();
 
 export const createNewUserRepository = async ({ firstName, lastName, age, email, password }: CreateUserDTO ) => {
-
-  const userExists = await prisma.user.findFirst({
-    where: { email },
-  });
-
-  if (userExists) {
-    throw new EmailAlreadyExistsError();
-  }
-
-  const hashedPassword = await hash(password, 10);
-
-  const user = await prisma.user.create({
+  return await prisma.user.create({
     data: {
       firstName,
       lastName,
       age,
       email,
-      password: hashedPassword,
+      password,
     },
-  });
-
-  const { accessToken, refreshToken } = generateToken(user.id);
-
-  return { user, accessToken, refreshToken };
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      age: true,
+      email: true,
+      createdAt: true,
+    }
+  })
 }
 
 
-export async function getUsersRepository() {
+export const getUsersRepository = async () => {
   return await prisma.user.findMany({
     select: {
       id: true,
@@ -45,12 +36,12 @@ export async function getUsersRepository() {
       age: true,
       email: true,
       createdAt: true,
-      updatedAt: true
+      updatedAt: true,
     }
   });
 }
 
-export async function getProfileRepository(userId: string) {
+export const getProfileRepository = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
   });
@@ -62,8 +53,8 @@ export async function getProfileRepository(userId: string) {
   return user;
 }
 
-export async function getUserByIdRepository(id: string) {
-  const user = await prisma.user.findUnique({
+export const getUserByIdRepository = async (id: string) => {
+  return await prisma.user.findUnique({
     where: { id },
     select: {
       id: true,
@@ -76,37 +67,31 @@ export async function getUserByIdRepository(id: string) {
     }
   })
 
-  if (!user) {
-    throw new UserNotFoundError();
-  }
+}
 
-  return user;
+export const findUserByEmailRepository = async (email: string) => {
+  return await prisma.user.findUnique({
+    where: { email },
+  })
+
 }
 
 export const updateUserRepository = async ({ id, body }: UpdateUserDTO) => {
-  const userExists = await prisma.user.findUnique({ where: { id } });
+  const dataToUpdate: UpdateUserBody = {};
 
-  if (!userExists) {
-    throw new UserNotFoundError();
-  }
+  if (body.firstName) dataToUpdate.firstName = body.firstName;
+  if (body.lastName) dataToUpdate.lastName = body.lastName;
+  if (body.age) dataToUpdate.age = body.age;
+  if (body.email) dataToUpdate.email = body.email;
+  if (body.password) dataToUpdate.password = await hash(body.password, 10);
 
-  const passwordHashed = body.password ? await hash(body.password, 10) : userExists.password;
-
-  const updatedUser = await prisma.user.update({
+  return await prisma.user.update({
     where: { id },
-    data: {
-      firstName: body.firstName ?? userExists.firstName,
-      lastName: body.lastName ?? userExists.lastName,
-      age: body.age ?? userExists.age,
-      email: body.email ?? userExists.email,
-      password: passwordHashed,
-    },
+    data: dataToUpdate,
   });
-
-  return updatedUser;
 };
 
-export async function deleteUserRepository(id: string) {
+export const deleteUserRepository = async (id: string) => {
   const userExists = await prisma.user.findFirst({ where: { id } });
 
   if (!userExists) {

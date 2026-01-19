@@ -1,8 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { hash } from "bcryptjs";
 import { UserNotFoundError } from "../utils/errors/user-not-found-error";
 import { CreateUserDTO } from "../interfaces/ICreateUserDTO";
-import { UpdateUserBody, UpdateUserDTO } from "../interfaces/IUpdateUser";
+import { UpdateUserDTO } from "../interfaces/IUpdateUser";
 
 const prisma = new PrismaClient();
 
@@ -56,15 +55,6 @@ export const getProfileRepository = async (userId: string) => {
 export const getUserByIdRepository = async (id: string) => {
   return await prisma.user.findUnique({
     where: { id },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      age: true,
-      email: true,
-      createdAt: true,
-      updatedAt: true
-    }
   })
 
 }
@@ -77,17 +67,9 @@ export const findUserByEmailRepository = async (email: string) => {
 }
 
 export const updateUserRepository = async ({ id, body }: UpdateUserDTO) => {
-  const dataToUpdate: UpdateUserBody = {};
-
-  if (body.firstName) dataToUpdate.firstName = body.firstName;
-  if (body.lastName) dataToUpdate.lastName = body.lastName;
-  if (body.age) dataToUpdate.age = body.age;
-  if (body.email) dataToUpdate.email = body.email;
-  if (body.password) dataToUpdate.password = await hash(body.password, 10);
-
-  return await prisma.user.update({
+  return prisma.user.update({
     where: { id },
-    data: dataToUpdate,
+    data: body,
   });
 };
 

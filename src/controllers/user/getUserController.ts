@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getUserService } from "../../services/user/UserService";
+import { getUserService } from "../../services/user/userService";
 import { UserNotFoundError } from "../../utils/errors/user-not-found-error";
 
 const getUsers = async (req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { updateUserService } from "../../services/user/UserService";
+import { updateUserService } from "../../services/user/userService";
 import { UserNotFoundError } from "../../utils/errors/user-not-found-error";
 
 
@@ -17,9 +17,10 @@ const updateUser = async (req: Request, res: Response) => {
   try {
   
     const body = schema.parse(req.body);
+    const id = req.params.id;
 
     const updatedUser = await updateUserService({
-        id: req.params.id,
+        id,
         body,
       });
 

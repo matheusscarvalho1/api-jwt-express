@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { RequestJWT } from "../../@types/customRequest-jwt";
 import { UserNotFoundError } from "../../utils/errors/user-not-found-error";
-import { getUserByIdService } from "../../services/user/UserService";
+import { getUserByIdService } from "../../services/user/userService";
 
 const getUserProfile = async (req: RequestJWT, res: Response) => {
   try {

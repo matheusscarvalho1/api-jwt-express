@@ -1,5 +1,5 @@
 import {  RequestHandler  } from "express";
-import { deleteUserService } from "../../services/user/UserService";
+import { deleteUserService } from "../../services/user/userService";
 import { UserNotFoundError } from "../../utils/errors/user-not-found-error";
 
 

@@ -1,6 +1,6 @@
 
 import { UserNotFoundError } from "../../utils/errors/user-not-found-error";
-import { getUserByIdService } from "../../services/user/UserService";
+import { getUserByIdService } from "../../services/user/userService";
 import { RequestHandler } from "express";
 
 const getUserById: RequestHandler = async (req, res) => {

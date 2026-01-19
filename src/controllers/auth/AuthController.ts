@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Request, Response } from "express";
-import { authenticateUserService } from "../../services/auth/AuthService"
+import { authenticateUserService } from "../../services/auth/authService"
 import { InvalidCredentialsError } from "../../utils/errors/invalid-credentials-error";
 
 const authUser = async (req: Request, res: Response) => {

@@ -68,8 +68,15 @@ export const updateUserService = async ({ id, body }: UpdateUserDTO) => {
   if (!userExists) {
     throw new UserNotFoundError();
   }
-    
-  const updatedUser = await updateUserRepository({ id, body });
+
+  const userToUpdate  = { ...body }
+
+  if (body.password) {
+    userToUpdate.password = await hash(body.password, 10);
+  }
+
+  const updatedUser = await updateUserRepository({ id, body: userToUpdate });
+  
 
   return updatedUser;
 };

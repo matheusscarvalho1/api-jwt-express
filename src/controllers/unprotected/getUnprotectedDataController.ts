@@ -9,7 +9,6 @@ const getUnprotectedData = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Usuários listados com sucesso", data: data });
 
   } catch (error) {
-
     if (error instanceof DataNotFound) {
       return res.status(404).json({
         message: error.message,

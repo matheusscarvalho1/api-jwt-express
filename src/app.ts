@@ -5,6 +5,7 @@ import { healthRoutes } from "./routes/healthRoutes";
 import { userRoutes } from "./routes/userRoutes";
 import { loggerMiddleware } from "./middleware/loggerMiddleware";
 import { unprotectedRoutes } from "./routes/unprotectedRoutes";
+import { protectedRoutes } from "./routes/protectedRoutes";
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(healthRoutes)
 app.use(authRoutes)
 app.use(userRoutes)
 app.use(unprotectedRoutes)
-// app.use("/protected")
+app.use(protectedRoutes)
 
 
 

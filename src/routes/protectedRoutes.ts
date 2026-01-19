@@ -5,12 +5,14 @@ import updateUnprotectedData from "../controllers/unprotected/updateUnprotectedD
 import getUnprotectedData from "../controllers/unprotected/getUnprotectedDataController";
 import deleteUnprotectedData from "../controllers/unprotected/deleteUnprotectedDataController";
 
+import authMiddleware from "../middleware/authMiddleware";
+
 const router = Router();
 
-router.post("/api/v1/unprotected/create", createUnprotectedData);
-router.get("/api/v1/unprotected/get", getUnprotectedData);
-router.get("/api/v1/unprotected/get/id/:id", getUnprotectedDataById);
-router.put("/api/v1/unprotected/update/id/:id", updateUnprotectedData);
-router.delete("/api/v1/unprotected/delete/id/:id", deleteUnprotectedData);
+router.post("/api/v1/protected/create", authMiddleware, createUnprotectedData);
+router.get("/api/v1/protected/get", authMiddleware, getUnprotectedData);
+router.get("/api/v1/protected/get/id/:id", authMiddleware, getUnprotectedDataById);
+router.put("/api/v1/protected/update/id/:id", authMiddleware, updateUnprotectedData);
+router.delete("/api/v1/protected/delete/id/:id", authMiddleware, deleteUnprotectedData);
 
-export { router as unprotectedRoutes  }
+export { router as protectedRoutes }

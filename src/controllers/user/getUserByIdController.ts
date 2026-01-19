@@ -7,9 +7,9 @@ const getUserById: RequestHandler = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = await getUserByIdService(id);
+    const response = await getUserByIdService(id);
 
-    return res.status(200).json({ message: "Usuário encontrado com sucesso", data: user });
+    return res.status(200).json({ message: "Usuário encontrado com sucesso", data: response });
     
   } catch (error) {
     if (error instanceof UserNotFoundError) {

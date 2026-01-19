@@ -17,7 +17,7 @@ const updateUser = async (req: Request, res: Response) => {
   try {
   
     const body = schema.parse(req.body);
-    const id = req.params.id;
+    const { id } = req.params;
 
     const updatedUser = await updateUserService({
         id,

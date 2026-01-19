@@ -1,5 +1,5 @@
 export class DataNotFound extends Error {
   constructor() {
-    super("Dados não encontrados.");
+    super("Dado(s) não encontrado(s).");
   }
 }

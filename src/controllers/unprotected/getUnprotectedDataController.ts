@@ -4,9 +4,9 @@ import { DataNotFound } from "../../utils/errors/data-not-found-error";
 
 const getUnprotectedData = async (req: Request, res: Response) => {
   try {
-    const data = await getUnprotectedDataService();
+    const response = await getUnprotectedDataService();
 
-    return res.status(200).json({ message: "Usuários listados com sucesso", data: data });
+    return res.status(200).json({ message: "Usuários listados com sucesso", data: response });
 
   } catch (error) {
     if (error instanceof DataNotFound) {

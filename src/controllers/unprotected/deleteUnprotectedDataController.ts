@@ -4,7 +4,7 @@ import { DataNotFound } from "../../utils/errors/data-not-found-error";
 
 const deleteUnprotectedData = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
+    const { id } = req.params;
 
     await deleteUnprotectedDataService(id);
 

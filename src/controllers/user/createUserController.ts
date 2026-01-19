@@ -15,11 +15,11 @@ const createUser: RequestHandler = async (req: Request, res: Response) => {
   try {
     const validatedData = schema.parse(req.body);
 
-    const result = await createUserService(validatedData);
+    const response = await createUserService(validatedData);
 
     return res.status(201).json({
       message: "Usuário criado com sucesso",
-      data: result,
+      data: response,
     });
   } catch (error) {
     

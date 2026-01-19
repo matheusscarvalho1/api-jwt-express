@@ -4,8 +4,8 @@ import { updateUnprotectedDataService } from "../../services/unprotectedData/unp
 import { DataNotFound } from "../../utils/errors/data-not-found-error";
 
 
-const updateUnprotectedData = (req: Request, res: Response) => {
-  const id = req.params.id;
+const updateUnprotectedData = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
   const schema = z.object({
     data: z.string(),
@@ -15,10 +15,10 @@ const updateUnprotectedData = (req: Request, res: Response) => {
     const body = req.body;
     const { data } = schema.parse(body);
 
-    const response = updateUnprotectedDataService(id, data);
+    const response = await updateUnprotectedDataService(id, data);
 
     return res.status(200).json({
-      message: "Usuário atualizado com sucesso",
+      message: "Dado atualizado com sucesso",
       data: response
     });
   } catch (error) {

@@ -3,6 +3,8 @@
 
 Este é um projeto de API RESTful construída com **Node.js**, **Express** e **TypeScript**, utilizando autenticação com **JWT**. O objetivo é fornecer uma base segura para desenvolvimento de aplicações com rotas protegidas e gerenciamento de usuários.
 
+- Link para documentação: https://api-jwt-express.onrender.com/docs/
+
 ## 🚀 Tecnologias Utilizadas
 
 - **Node.js** + **Express 5.1** – Backend moderno e performático.

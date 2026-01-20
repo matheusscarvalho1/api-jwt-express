@@ -24,13 +24,22 @@ const swaggerOptions: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Express  JWT - TypeScript',
+      title: 'AuthSystem APIs (Back-End) — Node.js (Express), Swagger & TypeScript',
       version: '1.0.0',
-      description: 'Documentação simples da API com Node.js (Express) utilizando TypeScript com rotas protegidas JWT',
+      description: 'Documentação da API com Node.js (Express) utilizando TypeScript com rotas protegidas JWT',
+       contact: {
+        name: "Matheus Carvalho",
+        url: "https://matheusscarvalho-dev.onrender.com/",
+      },
     },
     servers: [
       {
         url: 'http://localhost:8080',
+        description: 'Servidor de Desenvolvimento',
+      },
+      {
+        url: 'https://api-jwt-express.onrender.com',
+        description: 'Servidor de Produção (Render)',
       },
     ],
     components: {

@@ -3,13 +3,15 @@
 
 Este é um projeto de API RESTful construída com **Node.js**, **Express** e **TypeScript**, utilizando autenticação com **JWT**. O objetivo é fornecer uma base segura para desenvolvimento de aplicações com rotas protegidas e gerenciamento de usuários.
 
-- Link para documentação: https://api-jwt-express.onrender.com/docs/
+- **Documentação Oficial:** [Acesse aqui](https://api-jwt-express.onrender.com/docs/)
 
 ## 🚀 Tecnologias Utilizadas
 
 - **Node.js** + **Express 5.1** – Backend moderno e performático.
 - **TypeScript 5.8** – Tipagem estática para maior segurança e produtividade.
-- **Prisma ORM** – Gerenciamento de banco de dados moderno e eficiente
+- **Prisma ORM** – Gerenciamento de banco de dados moderno e eficiente.
+- **PostgreSQL** – Banco de dados relacional robusto.
+- **Docker** – Containerização do ambiente de banco de dados.
 - **JWT (jsonwebtoken)** – Autenticação segura via tokens.
 - **BcryptJS** – Criptografia de senhas (Hashing). 
 - **Zod** – Validação de dados rigorosa com suporte a Regex.  
@@ -25,6 +27,22 @@ O projeto adota o padrão **Controller-Service-Repository**, garantindo a separa
 2.  **Services:** Camada de lógica de negócio, onde residem as regras da aplicação e validações de fluxo.
 3.  **Repositories:** Camada isolada de persistência que utiliza o **Prisma Client** para comunicação com o banco de dados.
 
+
+## 🐳 Docker Setup
+
+O projeto está totalmente containerizado, permitindo subir a API e o Banco de Dados com um único comando (Banco de dados + Imagem da aplicação).
+
+```bash
+# Sobe a API e o PostgreSQL prontos para uso
+docker compose up -d --build
+
+# Ver logs da aplicação em tempo real
+docker compose logs -f api
+
+# Derrubar o ambiente e remover volumes
+docker compose down -v
+```
+
 ## 📦 Instalação e Setup
 
 Utilize o [pnpm](https://pnpm.io) para gerenciar as dependências de forma eficiente:
@@ -37,10 +55,10 @@ pnpm install
 
 ## ⚙️ Configuração
 
-Crie um arquivo `.env` na raiz do projeto com as variáveis:
+1. Configure o arquivo .env na raiz do projeto (veja o .env.example)
 
 ```env
-DATABASE_URL="postgresql://usuario:senha@localhost:5432/nome_do_banco"
+DATABASE_URL="postgresql://project-apis-express-jwt:secret@localhost:5432/app?schema=public"
 JWT_SECRET="sua_chave_secreta"
 ```
 

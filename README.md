@@ -5,23 +5,32 @@ Este é um projeto de API RESTful construída com **Node.js**, **Express** e **T
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Node.js** + **Express** – Backend leve e performático  
-- **TypeScript** – Tipagem estática e maior segurança  
-- **Prisma ORM** – Abstração moderna para banco de dados  
-- **JWT (jsonwebtoken)** – Autenticação segura com tokens  
-- **BcryptJS** – Criptografia de senhas  
-- **Zod** – Validação de dados  
-- **dotenv** – Gerenciamento de variáveis de ambiente  
-- **ESLint + Prettier** – Padronização e qualidade de código  
+- **Node.js** + **Express 5.1** – Backend moderno e performático.
+- **TypeScript 5.8** – Tipagem estática para maior segurança e produtividade.
+- **Prisma ORM** – Gerenciamento de banco de dados moderno e eficiente
+- **JWT (jsonwebtoken)** – Autenticação segura via tokens.
+- **BcryptJS** – Criptografia de senhas (Hashing). 
+- **Zod** – Validação de dados rigorosa com suporte a Regex.  
+- **Swagger (OpenAPI 3.0)** – Documentação viva e funcional acessível via `/docs`.
+- **pnpm** – Gerenciador de pacotes extremamente rápido.
+- **tsup** – Build de produção extremamente rápido para ambientes modernos. 
 
-## 📦 Instalação
+## 🏛️ Arquitetura e Padrões
 
-Clone o projeto e instale as dependências:
+O projeto adota o padrão **Controller-Service-Repository**, garantindo a separação total de responsabilidades:
+
+1.  **Controllers:** Gerenciam a entrada de requisições, validam schemas com **Zod** e definem a documentação OpenAPI/Swagger.
+2.  **Services:** Camada de lógica de negócio, onde residem as regras da aplicação e validações de fluxo.
+3.  **Repositories:** Camada isolada de persistência que utiliza o **Prisma Client** para comunicação com o banco de dados.
+
+## 📦 Instalação e Setup
+
+Utilize o [pnpm](https://pnpm.io) para gerenciar as dependências de forma eficiente:
 
 ```bash
 git clone https://github.com/seu-usuario/projeto-apis-protegidas-com-jwt.git
 cd projeto-apis-protegidas-com-jwt
-npm install
+pnpm install
 ````
 
 ## ⚙️ Configuração
@@ -47,22 +56,31 @@ npx prisma migrate dev --name init
 
 ## 🧪 Execução
 
-Inicie o servidor de desenvolvimento:
+O projeto possui documentação interativa. Ao rodar o servidor, você pode testar as rotas diretamente.
+
 
 ```bash
-npm run dev
+# Iniciar em modo desenvolvimento
+pnpm run dev
+
+# Acesse o Swagger UI em:
+http://localhost:8080/docs
 ```
 
 Para rodar em produção:
 
 ```bash
-npm run build
-npm start
+pnpm run build
+pnpm start
 ```
 
 ## 🔐 Autenticação com JWT
 
-Após o login, a API retorna um token JWT. Para acessar rotas protegidas, inclua o token no cabeçalho da requisição:
+Para rotas protegidas (Tag Protected no Swagger):
+1. Faça login em /api/v1/auth/user.
+2. Copie o accessToken.
+3. No Swagger, clique em Authorize, cole o token e salve.
+4. O cabeçalho será enviado automaticamente como: Authorization: Bearer <seu_token>
 
 ```
 Authorization: Bearer seu_token_jwt
@@ -72,30 +90,36 @@ Authorization: Bearer seu_token_jwt
 
 ```
 src/
-├── controllers/     # Lógica das rotas
-├── middlewares/     # Autenticação e validações
-├── routes/          # Definição das rotas
-├── schemas/         # Validação com Zod
-├── services/        # Regras de negócio
-├── index.ts         # Entrada da aplicação
-prisma/
-└── schema.prisma    # Modelo do banco de dados
+├── @types/          # Tipagens customizadas (Ex: RequestJWT)
+├── controllers/     # Orquestradores das rotas
+├── middleware/      # Middlewares (Auth, Logger, Erros)
+├── repository/      # Persistência de dados (Prisma)
+├── routes/          # Definição das rotas e docs Swagger
+├── services/        # Regras de negócio da aplicação
+├── utils/           # Erros customizados e auxiliares
+└── app.ts           # Configuração principal do servidor
 ```
 
 ## ✅ Funcionalidades
 
-* Cadastro de usuários com senha criptografada
-* Login com geração de token JWT
-* Middleware de autenticação
-* Validação de dados com Zod
-* Integração com banco de dados via Prisma
+* **Arquitetura Escalável:** Implementação do padrão Controller-Service-Repository para melhor manutenção.
+* **Cadastro de Usuários:** Segurança com criptografia de senhas via BcryptJS.
+* **Autenticação JWT Completa:** Fluxo de Login com geração de Access Token e Refresh Token.
+* **Segurança de Senhas:** Validação rigorosa via Zod (Maiúsculas, Minúsculas, Números e Caracteres Especiais).
+* **Middleware de Proteção:** Proteção de rotas sensíveis com verificação de integridade do Token.
+* **Validação de Dados:** Schemas do Zod para garantir que apenas dados limpos entrem no banco de dados.
+* **Persistência Robusta:** Integração com banco de dados utilizando Prisma ORM.
+* **Documentação Viva:** Interface Swagger (OpenAPI 3.0) para testes de endpoints em tempo real.
+* **Logging Profissional:** Monitoramento de requisições e erros utilizando a biblioteca Pino.
+* **CORS Habilitado:** Configuração pronta para integração segura com Front-end.
 
 ## 📜 Scripts
 
 ```bash
-npm run dev        # Inicia o servidor em modo dev
-npm run build      # Compila o projeto TypeScript
-npm start          # Executa o projeto em produção
+pnpm dev        # Inicia o servidor com ts-node-dev
+pnpm build      # Compila o projeto com tsup (pasta dist)
+pnpm start      # Executa o projeto compilado
+pnpm deploy     # Instala, sincroniza banco e compila
 ```
 
 

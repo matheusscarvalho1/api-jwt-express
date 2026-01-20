@@ -1,5 +1,9 @@
 import express from "express";
 import cors from "cors";
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
+
 import { authRoutes } from "./routes/authRoutes";
 import { healthRoutes } from "./routes/healthRoutes";
 import { userRoutes } from "./routes/userRoutes";
@@ -16,8 +20,36 @@ app.use(
   })
 );
 
+const swaggerOptions: swaggerJsdoc.Options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Express  JWT - TypeScript',
+      version: '1.0.0',
+      description: 'Documentação simples da API com Node.js (Express) utilizando TypeScript com rotas protegidas JWT',
+    },
+    servers: [
+      {
+        url: 'http://localhost:8080',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+  },
+  apis: ['./src/routes/*.ts', './src/app.ts'], 
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 app.use(loggerMiddleware);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(healthRoutes)
 app.use(authRoutes)

@@ -34,7 +34,7 @@ O projeto está totalmente containerizado, permitindo subir a API e o Banco de D
 
 ```bash
 # Sobe a API e o PostgreSQL prontos para uso
-docker compose up -d --build
+docker compose up -d
 
 # Ver logs da aplicação em tempo real
 docker compose logs -f api
@@ -58,7 +58,7 @@ pnpm install
 1. Configure o arquivo .env na raiz do projeto (veja o .env.example)
 
 ```env
-DATABASE_URL="postgresql://project-apis-express-jwt:secret@localhost:5432/app?schema=public"
+DATABASE_URL="credenciais_do_banco"
 JWT_SECRET="sua_chave_secreta"
 ```
 
